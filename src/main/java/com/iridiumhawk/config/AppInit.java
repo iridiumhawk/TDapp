@@ -35,26 +35,26 @@ import javax.servlet.ServletRegistration;
 
 public class AppInit implements WebApplicationInitializer {
 
-    public void onStartup(ServletContext container) throws ServletException {
+  public void onStartup(ServletContext container) throws ServletException {
 
-        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.getEnvironment().setActiveProfiles("dev");
-        ctx.register(Config.class, WebConfig.class, HibernateConfig.class); //
-        ctx.setServletContext(container);
+    AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+    ctx.getEnvironment().setActiveProfiles("dev");
+    ctx.register(Config.class, WebConfig.class, HibernateConfig.class); //
+    ctx.setServletContext(container);
 //        ctx.getEnvironment().setActiveProfiles("dev");
 
-        // charset Filter enforcer
-        FilterRegistration.Dynamic charsetFilter =
-                container.addFilter("charsetFilter", CharacterEncodingFilter.class);
-        charsetFilter.setInitParameter("encoding", "UTF-8");
-        charsetFilter.setInitParameter("forceEncoding", "true");
-        charsetFilter.addMappingForUrlPatterns(null, false, "/*");
+    // charset Filter enforcer
+    FilterRegistration.Dynamic charsetFilter =
+        container.addFilter("charsetFilter", CharacterEncodingFilter.class);
+    charsetFilter.setInitParameter("encoding", "UTF-8");
+    charsetFilter.setInitParameter("forceEncoding", "true");
+    charsetFilter.addMappingForUrlPatterns(null, false, "/*");
 
-        ServletRegistration.Dynamic servlet =
-                container.addServlet("dispatcher", new DispatcherServlet(ctx));
+    ServletRegistration.Dynamic servlet =
+        container.addServlet("dispatcher", new DispatcherServlet(ctx));
 
-        servlet.setLoadOnStartup(1);
-        servlet.addMapping("/");
-    }
+    servlet.setLoadOnStartup(1);
+    servlet.addMapping("/");
+  }
 
 }

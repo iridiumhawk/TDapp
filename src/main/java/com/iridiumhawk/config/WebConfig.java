@@ -27,32 +27,32 @@ import java.util.Properties;
 
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-        public ViewResolver viewResolver() {
-            InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-            viewResolver.setViewClass(JstlView.class);
-            viewResolver.setPrefix("/WEB-INF/pages/");
-            viewResolver.setSuffix(".jsp");
-            return viewResolver;
-    }
+  @Bean
+  public ViewResolver viewResolver() {
+    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+    viewResolver.setViewClass(JstlView.class);
+    viewResolver.setPrefix("/WEB-INF/pages/");
+    viewResolver.setSuffix(".jsp");
+    return viewResolver;
+  }
 
 
-    @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("classpath:resourcebundles/mess");
+  @Bean
+  public MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    messageSource.setBasenames("classpath:resourcebundles/mess");
 //        messageSource.setUseCodeAsDfaultMessage(true);
-        messageSource.setDefaultEncoding("UTF-8");
+    messageSource.setDefaultEncoding("UTF-8");
 //        messageSource.setFileEncodings();
 //        messageSource.setFallbackToSystemLocale(false);
-        messageSource.setCacheSeconds(60);
-        return messageSource;
-    }
+    messageSource.setCacheSeconds(60);
+    return messageSource;
+  }
 
-@Override
+  @Override
 //from WebMvcConfigurerAdapter
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
-    }
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
+  }
 
 }

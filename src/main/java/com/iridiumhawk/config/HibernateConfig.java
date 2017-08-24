@@ -22,21 +22,21 @@ import java.util.Properties;
 @Import({HsqlDbProfile.class, MysqlDbProfile.class})
 public class HibernateConfig {
 
-    @Autowired
-    private Environment environment;
+  @Autowired
+  private Environment environment;
 
-    @Value("${jdbc.url}")
-    private String jdbcUrl;
+  @Value("${jdbc.url}")
+  private String jdbcUrl;
 
-    @Bean
-    @Autowired
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan("com.iridiumhawk.entity"); //!!!
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-    }
+  @Bean
+  @Autowired
+  public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+    LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+    sessionFactory.setDataSource(dataSource);
+    sessionFactory.setPackagesToScan("com.iridiumhawk.entity"); //!!!
+    sessionFactory.setHibernateProperties(hibernateProperties());
+    return sessionFactory;
+  }
 
 /*
     @Profile("dev")
@@ -62,19 +62,22 @@ public class HibernateConfig {
         return dataSource;
     }*/
 
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-        return properties;
-    }
+  private Properties hibernateProperties() {
+    Properties properties = new Properties();
+    properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+    properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+    properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+//    properties.put("hibernate.connection.CharSet", "utf-8");
+//    properties.put("hibernate.connection.useUnicode", true);
+//    properties.put("hibernate.connection.characterEncoding", "utf-8");
+    return properties;
+  }
 
-    @Bean
-    @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory s) {
-        HibernateTransactionManager txManager = new HibernateTransactionManager();
-        txManager.setSessionFactory(s);
-        return txManager;
-    }
+  @Bean
+  @Autowired
+  public HibernateTransactionManager transactionManager(SessionFactory s) {
+    HibernateTransactionManager txManager = new HibernateTransactionManager();
+    txManager.setSessionFactory(s);
+    return txManager;
+  }
 }
