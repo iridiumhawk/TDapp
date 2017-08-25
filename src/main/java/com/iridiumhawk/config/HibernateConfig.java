@@ -17,16 +17,17 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
+//@PropertySource(value = {"classpath:hsql.properties"})
 //@PropertySource(value = {"classpath:mysql.properties"})
-@ImportResource("classpath:app.xml")
+//@ImportResource("classpath:app.xml")
 @Import({HsqlDbProfile.class, MysqlDbProfile.class})
 public class HibernateConfig {
 
   @Autowired
   private Environment environment;
 
-  @Value("${jdbc.url}")
-  private String jdbcUrl;
+/*  @Value("${jdbc.url}")
+  private String jdbcUrl;*/
 
   @Bean
   @Autowired
@@ -67,9 +68,15 @@ public class HibernateConfig {
     properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
     properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
     properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+    properties.put("hibernate.c3p0.minPoolSize", environment.getRequiredProperty("hibernate.c3p0.minPoolSize"));
+    properties.put("hibernate.c3p0.maxPoolSize", environment.getRequiredProperty("hibernate.c3p0.maxPoolSize"));
+    properties.put("hibernate.c3p0.timeout", environment.getRequiredProperty("hibernate.c3p0.timeout"));
+    properties.put("hibernate.c3p0.max_statement", environment.getRequiredProperty("hibernate.c3p0.max_statement"));
 //    properties.put("hibernate.connection.CharSet", "utf-8");
 //    properties.put("hibernate.connection.useUnicode", true);
 //    properties.put("hibernate.connection.characterEncoding", "utf-8");
+
+
     return properties;
   }
 
